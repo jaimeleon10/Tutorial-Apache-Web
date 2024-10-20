@@ -80,7 +80,7 @@ Modificamos el archivo `hosts` añadiendo las IPs y nombres de nuestros webhosts
 
 ## Lanzamiento del contenedor
 
-Lanzamos nuestro `docker-compose.yml` con el comando:
+Lanzamos nuestro `docker-compose.yml` en la terminal con el comando:
 
 ```bash
 docker-compose –build -d
