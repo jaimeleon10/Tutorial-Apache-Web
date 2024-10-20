@@ -28,7 +28,7 @@ Creamos la siguiente estructura de archivos (solo lo nombrado a continuación):
 
 <img src="./images/errorHtml.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
 
-- Creamos carpeta `privado` dentro del webhost en el cual vamos a añadir el SSL con su `html`. A esta solo se accederá al iniciar sesión con el usuario autenticado. Además, crearemos el archivo `.htaccess` dentro.
+- Creamos carpeta `privado` dentro del webhost que configuraremos con SSL. A esta solo se accederá al iniciar sesión con el usuario autenticado. Además, crearemos el archivo `.htaccess` dentro.
 
 <img src="./images/websitePrivado.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
 
