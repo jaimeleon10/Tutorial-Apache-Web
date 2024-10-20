@@ -1,0 +1,17 @@
+services:
+  web:
+    image: ubuntu/apache2
+    container_name: apache_server
+    ports:
+      - "8085:80"
+      - "8443:443"
+    volumes:
+      - ./conf/apache2.conf:/etc/apache2/apache2.conf # archivo de configuración principal
+      - ./conf/ports.conf:/etc/apache2/ports.conf # archivo de configuración de puertos
+      - ./sites-available:/etc/apache2/sites-available # archivos de configuración de hosts virtuales
+      - ./websites:/var/www/html/ # directorio de los sitios web
+      - ./scripts:/scripts # directorio de scripts
+      - ./htpasswd/.htpasswd:/etc/apache2/.htpasswd # archivo de contraseñas
+      - ./certs:/etc/apache2/certs # directorio de certificados (hechos con openssl)
+    restart: always
+    entrypoint: /scripts/entrypoint.sh # script de inicio
