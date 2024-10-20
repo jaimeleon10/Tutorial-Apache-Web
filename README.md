@@ -149,4 +149,4 @@ Ahora abrimos el navegador y buscamos las siguientes rutas:
 <img src="./images/seguro.net-error401.png" alt="archivos" style="padding-left:40px; padding-bottom:80px">
 
 #
-<img src="./images/banner.png" alt="archivos">
+<img src="./images/fondoJaime.png" alt="archivos">
