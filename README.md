@@ -106,11 +106,7 @@ docker exec -it apache_server /bin/bash
 
 Generamos archivo `.htpasswd` con el usuario y contraseña que deseemos.
 
-Una vez dentro de la terminal de Apache, iremos a la ruta `/etc/apache2`.
-
-Con el comando `ls -a` vemos los archivos ocultos y podemos ver que existe el archivo `.htpasswd`. En caso de no existir, lo generaremos nuevo, y si existe lo sobreescribiremos.
-
-Generamos el archivo con el siguiente comando:
+Una vez dentro de la terminal de Apache, iremos a la ruta `/etc/apache2` y pondremos el siguiente comando para crear el archivo.
 
 ```bash
 htpasswd -c /etc/apache2/.htpasswd usuario
