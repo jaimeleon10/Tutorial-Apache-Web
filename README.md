@@ -91,7 +91,7 @@ Modificamos el archivo `hosts` añadiendo las IPs y nombres de nuestros webhosts
 Lanzamos nuestro `docker-compose.yml` en la terminal con el comando:
 
 ```bash
-docker-compose –build -d
+docker-compose --build -d
 ```
 
 Si tenemos algún error podemos borrar lo generado con el comando:
