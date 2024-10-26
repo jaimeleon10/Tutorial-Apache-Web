@@ -16,11 +16,11 @@ Creamos la siguiente estructura de archivos (solo lo nombrado a continuación):
 
 - Archivo `jaime.conf` para web sin protocolo SSL.
 
-<img src="./images/archivoConfWeb" alt="archivos" style="padding-left:40px; padding-bottom:30px">
+<img src="./images/archivoConfWeb.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
 
 - Archivo `seguro.conf` para web con protocolo SSL.
 
-<img src="./images/archivoConfWebSSL" alt="archivos" style="padding-left:40px; padding-bottom:30px">
+<img src="./images/archivoConfWebSSL.png" alt="archivos" style="padding-left:40px; padding-bottom:30px">
 
 - Creamos carpeta `websites` y dentro creamos una carpeta para cada webhost.
 
