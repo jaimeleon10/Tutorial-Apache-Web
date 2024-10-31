@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial Apache Web</title>
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    .highlight { color: lime; font-size: 17px; }
+    img { display: block; padding-left: 40px; padding-bottom: 30px; }
+  </style>
+</head>
+<body>
+
+  <h1>Tutorial Apache Web</h1>
+
+  <p class="highlight"><strong>Buscad los archivos en el proyecto para usarlos de referencia en vuestras creaciones</strong></p>
+
+  <h2>Estructura de archivos</h2>
+  
+  <p>Creamos la siguiente estructura de archivos (solo lo nombrado a continuación):</p>
+
+  <ul>
+    <li>Creamos carpeta <code>conf</code> y copiamos archivos <code>conf</code> por defecto.</li>
+    <img src="./images/carpetaConfDefault.png" alt="Archivos de conf">
+    
+    <li>Creamos carpetas <code>sites-available</code>, copiamos archivos <code>conf</code> <code>default</code> y creamos archivos <code>conf</code> para cada webhost que vayamos a generar.</li>
+    <img src="./images/carpetaSitesAvailable.png" alt="Archivos de sites-available">
+    
+    <li>Archivo <code>jaime.conf</code> para web sin protocolo SSL.</li>
+    <img src="./images/archivoConfWeb.png" alt="Archivo conf para web sin SSL">
+    
+    <li>Archivo <code>seguro.conf</code> para web con protocolo SSL.</li>
+    <img src="./images/archivoConfWebSSL.png" alt="Archivo conf para web con SSL">
+    
+    <li>Creamos carpeta <code>websites</code> y dentro creamos una carpeta para cada webhost.</li>
+    <img src="./images/carpetaWebsites.png" alt="Carpeta websites">
+    
+    <li>Creamos <code>html</code> de web por defecto dentro de <code>websites</code> y <code>html</code> de cada web dentro de su carpeta.</li>
+    <img src="./images/webhostDefault.png" alt="HTML de web por defecto">
+    
+    <li>Creamos carpeta <code>errors</code> y dentro cada <code>html</code> de cada error que vayamos a controlar.</li>
+    <img src="./images/carpetaErrors.png" alt="Carpeta de errores">
+    <img src="./images/errorHtml.png" alt="Archivo de error HTML">
+    
+    <li>Creamos carpeta <code>privado</code> dentro del webhost que configuraremos con SSL. A esta solo se accederá al iniciar sesión con el usuario autenticado. Además, crearemos el archivo <code>.htaccess</code> dentro.</li>
+    <img src="./images/websitePrivado.png" alt="Carpeta privado con .htaccess">
+    
+    <li>Creamos <code>script</code> con los comandos que realizará el contenedor automáticamente al iniciarse. En nuestro caso habilitaremos los sitios creados, habilitaremos el módulo ssl y reiniciaremos el servicio de <code>Apache</code> para aplicar los cambios.</li>
+    <img src="./images/script.png" alt="Script de comandos">
+    
+    <li>Creamos carpeta <code>htpasswd</code> (el archivo se añadirá más tarde).</li>
+    <img src="./images/carpetaHtpasswd.png" alt="Carpeta htpasswd">
+    
+    <li>Creamos carpeta <code>certs</code> (los archivos se añadirán más tarde).</li>
+    <img src="./images/carpetaCerts.png" alt="Carpeta certs">
+    
+    <li>Creamos <code>docker-compose.yml</code> con la configuración de nuestro contenedor.</li>
+    <img src="./images/docker-compose.png" alt="Archivo docker-compose.yml">
+  </ul>
+
+  <h2>Generación de certificados</h2>
+
+  <p>Instalamos el programa <strong>OpenSSL</strong>.</p>
+
+  <p>Abrimos la terminal de OpenSSL y ejecutamos el siguiente comando (cambiar <code>seguro</code> por nombre de webhost):</p>
+
+  <pre><code>openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout seguro.key -out seguro.crt</code></pre>
+
+  <p>Nos pedirá una serie de datos. Respondemos a los datos que pide y en el <strong>Common Name</strong> ponemos el nombre del webhost incluida la extensión (<code>seguro.net</code>).</p>
+
+  <img src="./images/certificados.png" alt="Generación de certificados">
+
+  <p>Estos archivos se generarán en la ruta donde ejecutes el comando. Copia estos archivos a la carpeta <code>certs</code>.</p>
+
+  <h2>Modificación del archivo hosts</h2>
+
+  <p>Modificamos el archivo <code>hosts</code> de nuestro PC para generar los DNS de nuestros webhosts.</p>
+
+  <p>Vamos a la ruta: <code>C:\Windows\System32\drivers\etc</code></p>
+
+  <p>Dentro de esta habrá un archivo <code>hosts</code>. Haremos una copia de este como backup.</p>
+
+  <p>Modificamos el archivo <code>hosts</code> añadiendo las IPs y nombres de nuestros webhosts.</p>
+
+  <img src="./images/archivoHosts.png" alt="Archivo hosts">
+
+  <h2>Lanzamiento del contenedor</h2>
+
+  <p>Lanzamos nuestro <code>docker-compose.yml</code> en la terminal con el comando:</p>
+
+  <pre><code>docker-compose --build -d</code></pre>
+
+  <p>Si tenemos algún error podemos borrar lo generado con el comando:</p>
+
+  <pre><code>docker-compose down</code></pre>
+
+  <p>Para acceder a la terminal del servidor generado usamos el comando:</p>
+
+  <pre><code>docker exec -it apache_server /bin/bash</code></pre>
+
+  <p>(También sirve <code>bash</code>).</p>
+
+  <img src="./images/comandosDocker.png" alt="Comandos Docker">
+
+  <h2>Generación del archivo .htpasswd</h2>
+
+  <p>Generamos archivo <code>.htpasswd</code> con el usuario y contraseña que deseemos.</p>
+
+  <p>Una vez dentro de la terminal de Apache, iremos a la ruta <code>/etc/apache2</code> y pondremos el siguiente comando para crear el archivo.</p>
+
+  <pre><code>htpasswd -c /etc/apache2/.htpasswd usuario</code></pre>
+
+  <p>En <code>usuario</code> pondremos el nombre del usuario que queramos, y la contraseña la introduciremos cuando nos la pida.</p>
+
+  <img src="./images/htpasswd.png" alt="Archivo htpasswd">
+
+  <p>El archivo se copiará directamente en la ruta de nuestro proyecto al haber creado el volumen en el <code>docker-compose.yml</code>.</p>
+
+  <h2>Pruebas en el navegador</h2>
+
+  <p>Ahora abrimos el navegador y buscamos las siguientes rutas:</p>
+
+  <ul>
+    <li><code>http://jaime.com:8080</code></li>
+    <img src="./images/jaime.com.png" alt="Página jaime.com">
+    <img src="./images/jaime.com-error404.png" alt="Error 404 en jaime.com">
+    
+    <li><code>http://leon.com:8080</code></li>
+    <img src="./images/leon.com.png" alt="Página leon.com">
+    
+    <li><code>https://seguro.net:8443</code></li>
+    <img src="./images/seguro.net.png" alt="Página seguro.net">
+    
+    <li><code>https://seguro.net/privado</code> ➡️ <strong>Aquí introducimos los credenciales generados con htpasswd</strong></li>
+    <img src="./images/loginPrivado.png" alt="Login en seguro.net privado">
+    <img src="./images/seguro.net-privado.png" alt="Página seguro.net privado">
+    <img src="./images/seguro.net-error401.png" alt="Error 401 en seguro.net privado">
+  </ul>
+
+  <h2>Autor</h2>
+  
+  <p>Realizado por <a href="https://github.com/jaimeleon10">Jaime León Mulero</a></p>
+  <img src="./images/fondoJaime.png" alt="Fondo de Jaime León Mulero">
+
+</body>
+</html>
